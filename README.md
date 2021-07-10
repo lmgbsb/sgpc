@@ -1,6 +1,6 @@
 # sgpc - Sistema de Gestão de Postos de Combustiveis
 
-Um posto de gasolina com duas bombas abastecedoras independentes, uma de álcool e outra de gasolina, recebe veículos de diversas naturezas. 
+Um posto de combustiveis com duas bombas abastecedoras independentes, uma de etanol e outra de gasolina, recebe veículos de diversas naturezas. 
 
 Os veículos entram no posto em fila única, sendo direcionados para filas individuais das bombas de abastecimento. 
 
@@ -10,7 +10,7 @@ a partir das seguintes premissas:
 1. O preço do litro da GASOLINA é R$ 2,90;
 2. O preço do litro do ETANOL é R$ 2,27;
 3. Velocidade de abastecimento da bomba de gasolina: 10 litros / minuto;
-4. Velocidade de abastecimento da bomba de álcool: 12 litros /minuto;
+4. Velocidade de abastecimento da bomba de etanol: 12 litros / minuto;
 5. Cada veículo pode utilizar um ou mais tipos de combustível;
 6. Todos os veículos estão com tanque vazio e os terão completados;
 7. Minimizar a razão preço/km rodado ao realizar o direcionamento dos veículos para as bombas;
@@ -42,6 +42,6 @@ A saída deve ser produzida na ordem cronológica dos eventos, no seguinte forma
 * Total abastecido de ETANOL: 1125 litros
 
 
-A partir da descrição do problema, foi elaborado o seguinte diagrama de classes da camada de modelo: 
+A partir da descrição do problema, foi elaborado o seguinte diagrama de classes da camada de modelo para orientar o desenvolvimento e explicar a proposta de solução: 
 
 ![Diagrama](210709-diagrama_classes-model_package-v2.png)
