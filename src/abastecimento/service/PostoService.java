@@ -1,5 +1,6 @@
 package abastecimento.service;
 
+import java.time.Duration;
 import java.util.List;
 
 import abastecimento.factory.ModeloFactory;
@@ -49,14 +50,16 @@ public class PostoService {
 		TipoCombustivel tc1 = new TipoCombustivel();
 		
 		tc1.setDescricao("GASOLINA");
-		tc1.setVelocidadeAbastecimento(10);	
+		//6 segundos por litro
+		tc1.setVelocidadeAbastecimento(6);	
 		tc1.setPreco(2.9);
 		tcr.add(tc1);
 		
 		TipoCombustivel tc2 = new TipoCombustivel();
 		
 		tc2.setDescricao("ETANOL");
-		tc2.setVelocidadeAbastecimento(12);
+		//5 segundos por litro
+		tc2.setVelocidadeAbastecimento(5);
 		tc2.setPreco(2.27);		
 		tcr.add(tc2);
 		
@@ -132,6 +135,8 @@ public class PostoService {
 		//List<Bomba> bombas = br.getBombas();
 		Veiculo veiculo;
 		
+		int duracaoTotalAbastecimentoEmSegundos = 0;
+		
 		for(int i = 0; i< vr.getVeiculos().size(); i++) {
 			
 			veiculo = vr.getVeiculo(i);
@@ -169,6 +174,30 @@ public class PostoService {
 			}				
 			
 			ar.add(abastecimento);
+			
+			
+			//cálculo to tempo de abastecimento
+			double capacidadeTanque = veiculo.getModelo().getCapacidadeTanque();
+			double litrosPorSegundo = combustivel.getTipoCombustivel().getVelocidadeAbastecimento();
+			double tempoAbastecimentoEmSegundos = capacidadeTanque/litrosPorSegundo;
+			System.out.println("Tempo abastecimento: " + (int)tempoAbastecimentoEmSegundos + " segundos");
+			
+			duracaoTotalAbastecimentoEmSegundos += tempoAbastecimentoEmSegundos;
+			
+			Duration duration = Duration.ofSeconds(duracaoTotalAbastecimentoEmSegundos);
+						
+			System.out.print("[");
+			if (duration.toMinutes() < 10){
+				System.out.print("0");
+			}
+			System.out.print(duration.toMinutes());
+			System.out.print(":");
+			
+			if (duration.toSecondsPart() < 10){
+				System.out.print("0");
+			}
+			System.out.print(duration.toSecondsPart());
+			System.out.print("] ");
 			
 			System.out.print("Modelo: " + veiculo.getModelo().getDescricao());
 			System.out.print(" placa: " + veiculo.getPlaca());
