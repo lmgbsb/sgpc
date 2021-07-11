@@ -15,7 +15,7 @@ public class Application {
 		//encaminha os carros para abastecimento
 		ps.abasteceVeiculos();		
 
-		//Inicializa o serviço de gerenciamento de abastecimento
+		//Inicializa o serviço de impressão de abastecimentos
 		AbastecimentoService as = new AbastecimentoService(ps.getAr(), ps.getBr(), ps.getTcr());
 		
 		//Imprime o resultado da simulação na ordem cronológica dos eventos

@@ -140,11 +140,16 @@ public class PostoService {
 			Veiculo veiculo = vr.getVeiculo(v);
 			
 			abastecimento.setVeiculo(veiculo);
+			
+			
+//			É premissa do problema que os carros estão com o tanque vazio e que 
+//			a quantidade de combustivel de cada abastecimento será igual à capacidade
+//			do seu tanque			
 			abastecimento.setQuantidadeCombustivel(veiculo.getModelo().getCapacidadeTanque());
 			
-			//como ainda não se sabe se o veículo pode ser abastecido com
-			//mais de um combustível, consideramos a priori que o de melhor
-			//rendimento é o primeiro da lista e depois verificamos se há outros
+//			como ainda não se sabe se o veículo pode ser abastecido com
+//			mais de um combustível, consideramos a priori que o de melhor
+//			rendimento é o primeiro da lista e depois verificamos se há outros
 			ConsumoCombustivel combustivelMelhorRendimento = veiculo.getModelo().getCombustiveis().get(0);
 			
 			//verifica se o tem mais de um combustivel
@@ -166,8 +171,7 @@ public class PostoService {
 				//se o tipo de combustivel da bomba for o mesmo do combustivel
 				//de melhor rendimento do automóvel, abastece o veículo
 				Bomba bomba = bombas.get(b);
-				if(bomba.getCombustivel().getDescricao().
-						equals(combustivelMelhorRendimento.	getTipoCombustivel().getDescricao())) {
+				if(bomba.getCombustivel().getDescricao().equals(combustivelMelhorRendimento.getTipoCombustivel().getDescricao())) {
 					//abastece o automóvel
 					abastecimento.setBomba(bomba);
 				}

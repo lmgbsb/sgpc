@@ -35,12 +35,14 @@ public class AbastecimentoService {
 			Veiculo veiculo = abastecimento.getVeiculo();
 			Bomba bomba = abastecimento.getBomba();
 
-			System.out.print("Abastecimento com ");
-			System.out.print(bomba.getCombustivel().getDescricao());
-			System.out.println(" na bomba " + bomba.getId());
 			
-			//cálculo to tempo de abastecimento
-			System.out.println(abastecimento.getTempoAbastecimentoFormatado());			
+//			System.out.print("Abastecimento com ");
+//			System.out.print(bomba.getCombustivel().getDescricao());
+//			System.out.println(" na bomba " + bomba.getId());
+//			
+//			//cálculo to tempo de abastecimento
+//			System.out.println(abastecimento.getTempoAbastecimentoFormatado());			
+			
 			
 			String tempoTotal = getTempoTotalAbastecimentoFormatado(abastecimento.getTempoAbastecimento());
 			
