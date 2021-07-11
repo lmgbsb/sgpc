@@ -1,6 +1,5 @@
 package abastecimento.service;
 
-import java.time.Duration;
 import java.util.List;
 
 import abastecimento.factory.ModeloFactory;
@@ -15,7 +14,9 @@ import abastecimento.repository.BombaRepository;
 import abastecimento.repository.ModeloVeiculoRepository;
 import abastecimento.repository.TipoCombustivelRepository;
 import abastecimento.repository.VeiculoRepository;
+import lombok.Getter;
 
+@Getter
 public class PostoService {
 	
 	private TipoCombustivelRepository tcr;	
@@ -130,30 +131,31 @@ public class PostoService {
 	 */
 	public void abasteceVeiculos() {
 		ar = new AbastecimentoRepository();
-		
+				
 		//lê a lista de carros e encaminha para abastecimento
-		//List<Bomba> bombas = br.getBombas();
-		Veiculo veiculo;
-		
-		int duracaoTotalAbastecimentoEmSegundos = 0;
-		
-		for(int i = 0; i< vr.getVeiculos().size(); i++) {
+		for(int v = 0; v < vr.getVeiculos().size(); v ++) {
 			
-			veiculo = vr.getVeiculo(i);
 			Abastecimento abastecimento = new Abastecimento();
+			
+			Veiculo veiculo = vr.getVeiculo(v);
+			
 			abastecimento.setVeiculo(veiculo);
 			abastecimento.setQuantidadeCombustivel(veiculo.getModelo().getCapacidadeTanque());
-			ConsumoCombustivel combustivel = veiculo.getModelo().getCombustiveis().get(0);
+			
+			//como ainda não se sabe se o veículo pode ser abastecido com
+			//mais de um combustível, consideramos a priori que o de melhor
+			//rendimento é o primeiro da lista e depois verificamos se há outros
+			ConsumoCombustivel combustivelMelhorRendimento = veiculo.getModelo().getCombustiveis().get(0);
 			
 			//verifica se o tem mais de um combustivel
 			if(veiculo.getModelo().getCombustiveis().size() != 1) {			
 				 
 				//verifica qual combustivel tem maior rendimento
-				for(int z = 0; z < veiculo.getModelo().getCombustiveis().size(); z++) {
+				for(int r = 0; r < veiculo.getModelo().getCombustiveis().size(); r ++) {
 					
-					ConsumoCombustivel outroCombustivel = veiculo.getModelo().getCombustiveis().get(z);
-					 if (outroCombustivel.getQuilometrosPorLitro() > combustivel.getQuilometrosPorLitro()) {
-						 combustivel = outroCombustivel;							
+					ConsumoCombustivel outroCombustivel = veiculo.getModelo().getCombustiveis().get(r);
+					 if (outroCombustivel.getQuilometrosPorLitro() > combustivelMelhorRendimento.getQuilometrosPorLitro()) {
+						 combustivelMelhorRendimento = outroCombustivel;							
 					 }
 				}				
 			}			
@@ -164,99 +166,15 @@ public class PostoService {
 				//se o tipo de combustivel da bomba for o mesmo do combustivel
 				//de melhor rendimento do automóvel, abastece o veículo
 				Bomba bomba = bombas.get(b);
-				if(bomba.getCombustivel().getDescricao().equals(combustivel.getTipoCombustivel().getDescricao())) {
+				if(bomba.getCombustivel().getDescricao().
+						equals(combustivelMelhorRendimento.	getTipoCombustivel().getDescricao())) {
 					//abastece o automóvel
 					abastecimento.setBomba(bomba);
-					System.out.print("Abastecimento com ");
-					System.out.print(bomba.getCombustivel().getDescricao());
-					System.out.println(" na bomba " + bomba.getId());
 				}
 			}				
 			
 			ar.add(abastecimento);
 			
-			
-			//cálculo to tempo de abastecimento
-			double capacidadeTanque = veiculo.getModelo().getCapacidadeTanque();
-			double litrosPorSegundo = combustivel.getTipoCombustivel().getVelocidadeAbastecimento();
-			double tempoAbastecimentoEmSegundos = capacidadeTanque*litrosPorSegundo;			
-			
-			duracaoTotalAbastecimentoEmSegundos += tempoAbastecimentoEmSegundos;
-			
-			Duration durationTotal = Duration.ofSeconds(duracaoTotalAbastecimentoEmSegundos);
-			Duration duracaoAbastecimento = Duration.ofSeconds((long) tempoAbastecimentoEmSegundos);
-			
-			System.out.print("Tempo abastecimento: " + (int)tempoAbastecimentoEmSegundos + " segundos");
-			System.out.print(" = ");
-			System.out.print(duracaoAbastecimento.toMinutes() + " minutos e ");
-			System.out.println(duracaoAbastecimento.toSecondsPart() + " segundos");
-						
-			System.out.print("[");
-			if (durationTotal.toMinutes() < 10){
-				System.out.print("0");
-			}
-			System.out.print(durationTotal.toMinutes());
-			System.out.print(":");
-			
-			if (durationTotal.toSecondsPart() < 10){
-				System.out.print("0");
-			}
-			System.out.print(durationTotal.toSecondsPart());
-			System.out.print("] ");
-			
-			System.out.print("Modelo: " + veiculo.getModelo().getDescricao());
-			System.out.print(" placa: " + veiculo.getPlaca());
-			System.out.print(" foi abastecido com " + veiculo.getModelo().getCapacidadeTanque());
-			System.out.println(" litros de " + combustivel.getTipoCombustivel().getDescricao());
-			
-			System.out.println("\n---------------------------------------------------------------------------\n");
-						
 		}
 	}
-
-	public void totalizarBombas() {
-				
-		//carrega os abastecimentos de cada bomba do posto
-		List<Bomba> bombas = br.getBombas();		
-		
-		//para cada bomba, listar os abastecimentos
-		for(int b = 0; b < bombas.size(); b++) {
-			Bomba bomba = bombas.get(b);
-			
-			List<Abastecimento> abastecimentos = ar.findByCodigoBomba(bomba.getId());
-			
-			double totalCombustivelBomba = 0;
-			for(int a = 0; a< abastecimentos.size(); a++) {
-				totalCombustivelBomba += abastecimentos.get(a).getQuantidadeCombustivel();
-			}
-			
-			System.out.print("Total de combustível abastecido na bomba " + bomba.getId());
-			System.out.print(" (" + bomba.getCombustivel().getDescricao() + "): ");
-			System.out.print(totalCombustivelBomba);
-			System.out.println(" litros");			
-		}
-	}
-
-	public void totalizarCombustiveis() {
-		
-		//carrega os tipos de combustiveis do posto
-		List<TipoCombustivel> combustiveis = tcr.getTiposCombustivel();
-		
-		//Para cada tipo de combustivel, listar os abastecimentos
-		for(int c = 0; c < combustiveis.size(); c ++) {
-			TipoCombustivel combustivel = combustiveis.get(c);
-			
-			double totalCombustivel = 0;
-			List<Abastecimento> abastecimentos = ar.findByTipoCombustivel(combustivel.getDescricao());
-			for(int a = 0; a < abastecimentos.size(); a ++) {
-				totalCombustivel += abastecimentos.get(a).getQuantidadeCombustivel();
-			}
-			
-			System.out.print("Total geral abastecido de " + combustivel.getDescricao() + ": ");
-			System.out.print(totalCombustivel);
-			System.out.println(" litros");
-		}
-		
-	}
-	
 }

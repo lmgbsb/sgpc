@@ -1,5 +1,6 @@
 package abastecimento;
 
+import abastecimento.service.AbastecimentoService;
 import abastecimento.service.PostoService;
 
 public class Application {
@@ -12,16 +13,22 @@ public class Application {
 		PostoService ps = new PostoService();
 		
 		//encaminha os carros para abastecimento
-		ps.abasteceVeiculos();
+		ps.abasteceVeiculos();		
+
+		//Inicializa o serviço de gerenciamento de abastecimento
+		AbastecimentoService as = new AbastecimentoService(ps.getAr(), ps.getBr(), ps.getTcr());
+		
+		//Imprime o resultado da simulação na ordem cronológica dos eventos
+		as.imprimeAbastecimentos();
 		
 		System.out.println("#####################");
-		System.out.println("#Resumo da Simulação#");
+		System.out.println(" Resumo da Simulação ");
 		System.out.println("#####################\n");
 		
 		//Totaliza abastecimentos do dia por bomba
-		ps.totalizarBombas();
+		as.totalizarBombas();
 		
 		//Totaliza abastecimentos do dia por combustível
-		ps.totalizarCombustiveis();
+		as.totalizarCombustiveis();
 	}
 }
