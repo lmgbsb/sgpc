@@ -82,14 +82,12 @@ public class PostoService {
 		mvr = new ModeloVeiculoRepository();
 		
 		ModeloFactory fabrica = new ModeloFactory(tcr, mvr);
-		
-		
+				
 		//método lê o arquivo cvs a adciona os objetos do tipo ModeloVeiculo
 		//em ModeloRepository, que é um repositório para esse tipo de objetos
 		fabrica.leArquivoCsv(caminhoArquivo);
 		
-		this.mvr = mvr;
-		
+		this.mvr = mvr;		
 	}
 	
 	//Método lê o arquivo com a fila de veiculos e adiciona o modelo do veículo
@@ -150,12 +148,9 @@ public class PostoService {
 					
 					ConsumoCombustivel outroCombustivel = veiculo.getModelo().getCombustiveis().get(z);
 					 if (outroCombustivel.getQuilometrosPorLitro() > combustivel.getQuilometrosPorLitro()) {
-						 combustivel = outroCombustivel;
-							
+						 combustivel = outroCombustivel;							
 					 }
-				}
-				
-				
+				}				
 			}			
 
 			//verifica qual bomba tem o mesmo combustível do carro
@@ -204,8 +199,7 @@ public class PostoService {
 			System.out.print("Total de combustível abastecido na bomba " + bomba.getId());
 			System.out.print(" (" + bomba.getCombustivel().getDescricao() + "): ");
 			System.out.print(totalCombustivelBomba);
-			System.out.println(" litros");
-			
+			System.out.println(" litros");			
 		}
 	}
 
