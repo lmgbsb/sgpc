@@ -10,12 +10,7 @@ public class ConsumoCombustivel {
 	
 	private TipoCombustivel tipoCombustivel;
 	private double quilometrosPorLitro;
-	
-	
-	public ConsumoCombustivel() {
-		
-		
-	}
+	private ModeloVeiculo modelo;
 	
 	public ConsumoCombustivel(TipoCombustivel tipoCombustivel) {
 		this.tipoCombustivel = tipoCombustivel;
