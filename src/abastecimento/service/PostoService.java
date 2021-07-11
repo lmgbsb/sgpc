@@ -179,24 +179,29 @@ public class PostoService {
 			//cálculo to tempo de abastecimento
 			double capacidadeTanque = veiculo.getModelo().getCapacidadeTanque();
 			double litrosPorSegundo = combustivel.getTipoCombustivel().getVelocidadeAbastecimento();
-			double tempoAbastecimentoEmSegundos = capacidadeTanque/litrosPorSegundo;
-			System.out.println("Tempo abastecimento: " + (int)tempoAbastecimentoEmSegundos + " segundos");
+			double tempoAbastecimentoEmSegundos = capacidadeTanque*litrosPorSegundo;			
 			
 			duracaoTotalAbastecimentoEmSegundos += tempoAbastecimentoEmSegundos;
 			
-			Duration duration = Duration.ofSeconds(duracaoTotalAbastecimentoEmSegundos);
+			Duration durationTotal = Duration.ofSeconds(duracaoTotalAbastecimentoEmSegundos);
+			Duration duracaoAbastecimento = Duration.ofSeconds((long) tempoAbastecimentoEmSegundos);
+			
+			System.out.print("Tempo abastecimento: " + (int)tempoAbastecimentoEmSegundos + " segundos");
+			System.out.print(" = ");
+			System.out.print(duracaoAbastecimento.toMinutes() + " minutos e ");
+			System.out.println(duracaoAbastecimento.toSecondsPart() + " segundos");
 						
 			System.out.print("[");
-			if (duration.toMinutes() < 10){
+			if (durationTotal.toMinutes() < 10){
 				System.out.print("0");
 			}
-			System.out.print(duration.toMinutes());
+			System.out.print(durationTotal.toMinutes());
 			System.out.print(":");
 			
-			if (duration.toSecondsPart() < 10){
+			if (durationTotal.toSecondsPart() < 10){
 				System.out.print("0");
 			}
-			System.out.print(duration.toSecondsPart());
+			System.out.print(durationTotal.toSecondsPart());
 			System.out.print("] ");
 			
 			System.out.print("Modelo: " + veiculo.getModelo().getDescricao());
