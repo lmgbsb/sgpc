@@ -12,10 +12,11 @@ public class Application {
 		//que são necessários para encaminhar os veiculos para abastecimento
 		PostoService ps = new PostoService();
 		
-		//encaminha os carros para abastecimento
+		//encaminha os carros para abastecimento, carregando AbastecimentoRepository
 		ps.abasteceVeiculos();		
 
-		//Inicializa o serviço de impressão de abastecimentos
+//		Inicializa o serviço de impressão de abastecimentos com 
+//		AbastecimentoRepository, BombaRepository e TipoCombustivelRepository
 		AbastecimentoService as = new AbastecimentoService(ps.getAr(), ps.getBr(), ps.getTcr());
 		
 		//Imprime o resultado da simulação na ordem cronológica dos eventos
