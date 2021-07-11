@@ -10,8 +10,8 @@ import abastecimento.repository.VeiculoRepository;
 
 public class VeiculoFactory {
 
-	VeiculoRepository vr;
-	ModeloVeiculoRepository mvr;
+	private VeiculoRepository vr;
+	private ModeloVeiculoRepository mvr;
 	
 	public VeiculoFactory(VeiculoRepository vr, ModeloVeiculoRepository mvr) {
 		this.vr=vr;

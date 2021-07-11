@@ -2,7 +2,6 @@ package abastecimento.factory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 import abastecimento.model.ConsumoCombustivel;
 import abastecimento.model.ModeloVeiculo;
@@ -10,11 +9,9 @@ import abastecimento.repository.ModeloVeiculoRepository;
 import abastecimento.repository.TipoCombustivelRepository;
 
 public class ModeloFactory {
-
-	ArrayList<ModeloVeiculo> modelos;
 	
-	TipoCombustivelRepository tcr;
-	ModeloVeiculoRepository mvr;
+	private TipoCombustivelRepository tcr;
+	private ModeloVeiculoRepository mvr;
 	
 	public ModeloFactory(TipoCombustivelRepository tcr, ModeloVeiculoRepository mvr) {
 		this.tcr=tcr;
