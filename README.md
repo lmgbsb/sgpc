@@ -45,3 +45,9 @@ A saída deve ser produzida na ordem cronológica dos eventos, no seguinte forma
 A partir da descrição do problema, foi elaborado o seguinte diagrama de classes da camada de modelo para orientar o desenvolvimento e explicar a proposta de solução: 
 
 ![Diagrama](210709-diagrama_classes-model_package-v2.png)
+
+
+Na arquitetura proposta, a camada de serviços encapsula a lógica de negócio da aplicação
+conforme descrito por [Martin Fowler](https://martinfowler.com/eaaCatalog/serviceLayer.html)
+
+![Camada de Serviços](ServiceLayerSketch.png)
