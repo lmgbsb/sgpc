@@ -40,13 +40,13 @@ public class ModeloFactory {
 				    modelo.setDescricao(stringModelo);
 				    modelo.setCapacidadeTanque(Double.parseDouble(stringCapacidadeTanque));
 				    
-				    if(stringConsumoGasolina != null && stringConsumoGasolina != "") {
+				    if(stringConsumoGasolina != null && !(stringConsumoGasolina.equals(""))) {
 				    	ConsumoCombustivel comsumoGasolina = new ConsumoCombustivel(tcr.get("GASOLINA"));
 				    	comsumoGasolina.setQuilometrosPorLitro(Double.parseDouble(stringConsumoGasolina));
 				    	modelo.adicionaTipoCombustivel(comsumoGasolina);
 				    }
 				    
-				    if(stringConsumoEtanol != null && stringConsumoEtanol != "") {
+				    if(stringConsumoEtanol != null && !(stringConsumoEtanol.equals(""))) {
 				    	ConsumoCombustivel comsumoEtanol = new ConsumoCombustivel(tcr.get("ETANOL"));
 				    	comsumoEtanol.setQuilometrosPorLitro(Double.parseDouble(stringConsumoEtanol));
 				    	modelo.adicionaTipoCombustivel(comsumoEtanol);
