@@ -52,3 +52,9 @@ a resposta da aplicação em cada operação conforme descrito
 por [Martin Fowler](https://martinfowler.com/eaaCatalog/serviceLayer.html)
 
 ![Camada de Serviços](ServiceLayerSketch.png)
+
+O design pattern Repository foi utilizado nesse projeto conforme descrito por [Martin Fowler](https://martinfowler.com/eaaCatalog/repository.html) no seu livro Patterns of Enterprise Application Architecture, ou seja, como uma interface entre os objetos do domínio e a camada de dados:
+
+![Repository](repositorySketch.png)
+
+A Repository mediates between the domain and data mapping layers, acting like an in-memory domain object collection. Client objects construct query specifications declaratively and submit them to Repository for satisfaction. Objects can be added to and removed from the Repository, as they can from a simple collection of objects, and the mapping code encapsulated by the Repository will carry out the appropriate operations behind the scenes
